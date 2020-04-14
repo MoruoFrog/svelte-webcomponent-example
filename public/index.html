@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset='utf-8'>
+	<meta name='viewport' content='width=device-width,initial-scale=1'>
+
+	<title>Svelte app</title>
+
+	<link rel='icon' type='image/png' href='/favicon.png'>
+	<link rel='stylesheet' href='/global.css'>
+	<link rel='stylesheet' href='/build/bundle.css'>
+
+	<script defer src='/build/bundle.js'></script>
+</head>
+
+<body style="text-align: center;">
+	<svelte-component id="test" name="world" objprop=""></svelte-component>
+	<button id="name-btn">toggle name</button>
+	<button id="obj-btn">set object prop</button>
+
+<script>
+	const component = document.querySelector('#test')
+
+	document.querySelector('#name-btn').addEventListener('click', () => {
+		component.name = component.name === 'new world' ? 'world' : 'new world'
+	})
+
+	document.querySelector('#obj-btn').addEventListener('click', () => {
+		component.objprop = { name: 'object props in html' }
+	})
+
+	component.addEventListener('eventTest', e => {
+		console.log('通过addEventListener监听，参数是自定义Event')
+		console.log(e)
+	})
+
+	setTimeout(() => {
+		component.$on('eventTest', e => {
+			console.log('通过$on添加，参数是自定义Event')
+			console.log(e)
+		})
+	})
+</script>
+</body>
+</html>
